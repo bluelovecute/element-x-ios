@@ -6,6 +6,7 @@ workflows:
       - name: Set up project
         script: |
           brew install xcodegen swiftlint swiftformat git-lfs pkl sourcery swiftgen
+          xcrun simctl list devices available
       
       - name: Generate Xcode project
         script: |
@@ -18,7 +19,7 @@ workflows:
             -configuration Debug \
             CODE_SIGNING_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -destination 'generic/platform=iOS Simulator' \
             build
     artifacts:
       - /tmp/xcodebuild_logs/*.log
