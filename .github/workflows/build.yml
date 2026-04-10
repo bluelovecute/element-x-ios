@@ -8,17 +8,15 @@ on:
 jobs:
   build:
     runs-on: macos-latest
+    
     steps:
       - uses: actions/checkout@v4
       
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode.app
-      
       - name: Build
-        run: xcodebuild -project ElementX.xcodeproj -scheme ElementX -configuration Release build CODE_SIGNING_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-      
-      - name: Upload IPA
-        uses: actions/upload-artifact@v4
-        with:
-          name: ElementX
-          path: build/*.ipa
+        run: |
+          xcodebuild -project ElementX.xcodeproj \
+            -scheme ElementX \
+            -configuration Debug \
+            CODE_SIGNING_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            build
