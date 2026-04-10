@@ -1,0 +1,27 @@
+workflows:
+  ios-build:
+    name: Build iOS
+    max_build_duration: 60
+    environment:
+      ios: "18.5"
+      xcode: "16.1"
+    scripts:
+      - name: Set up project
+        script: |
+          brew install xcodegen swiftlint swiftformat git-lfs
+      
+      - name: Generate Xcode project
+        script: |
+          xcodegen generate
+      
+      - name: Build
+        script: |
+          xcodebuild -workspace ElementX.xcodeproj/project.xcworkspace \
+            -scheme ElementX \
+            -configuration Debug \
+            CODE_SIGNING_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            build
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
